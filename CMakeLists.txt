@@ -1,43 +1,76 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.25)
 
-# 1. setup cmake
-# cmake -S . -B build -G generator
-# 2. build
-# cmake --build build
-
-# common problems in cmake
-# https://hsf-training.github.io/hsf-training-cmake-webpage/07-commonproblems/index.html
-
-# set(HI "hello world")
-# message(STATUS "${HI}")
+# generate `compile_commands.json` (only for make and ninja)
+# ln -s build/compile_commands.json compile_commands.json
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(
-  HelloWorld
+  ExampleProject
+  VERSION 0.1.0
+  DESCRIPTION ""
+  HOMEPAGE_URL ""
   LANGUAGES CXX
 )
 
-# learn more about package
+add_executable(exmple-app "")
 
-# learn more about add_subdirectory
-# https://stackoverflow.com/questions/48509911/cmake-add-subdirectory-vs-include
+set_target_properties(exmple-app
+  PROPERTIES # https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
+  # EXCLUDE_FROM_ALL true
+  OUTPUT_NAME app)
 
-# https://stackoverflow.com/questions/59263015/cmake-how-to-change-compile-commands-json-output-location
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+target_compile_features(exmple-app
+  PRIVATE cxx_std_20)
 
-add_library(linenoise INTERFACE)
-target_include_directories(
-  linenoise
-  INTERFACE
-    vendor/cpp-linenoise
-)
+target_compile_definitions(exmple-app
+  PRIVATE HELLO=1)
 
-file(GLOB_RECURSE SRC_FILES src/*.cpp)
-add_executable(hello ${SRC_FILES})
-target_compile_features(
-  hello
-  PRIVATE cxx_std_20
-)
-target_link_libraries(
-  hello
-  linenoise
-)
+# https://crascit.com/2016/01/31/enhanced-source-file-handling-with-target_sources/
+file(GLOB_RECURSE SRC_FILES
+  src/*.cpp
+  src/*.hpp)
+target_sources(exmple-app
+  PRIVATE ${SRC_FILES})
+
+# target_include_directories(exmple-app
+#   PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
+# target_link_libraries(exmple-app
+#   library_name)
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+  target_compile_options(exmple-app
+    PRIVATE
+      # use colored output
+      $<$<C_COMPILER_ID:GNU>:-fdiagnostics-color>
+      $<$<C_COMPILER_ID:Clang>:-fcolor-diagnostics>
+      $<$<CXX_COMPILER_ID:GNU>:-fdiagnostics-color>
+      $<$<CXX_COMPILER_ID:Clang>:-fcolor-diagnostics>
+      # more warnings
+      -Wall)
+
+  # use sanitizers
+  if (NOT WIN32)
+    target_compile_options(exmple-app
+      PRIVATE
+        $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
+        $<$<CONFIG:Debug>:-fno-sanitize-recover=all>
+        $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
+    target_link_options(exmple-app
+      PRIVATE
+        $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
+        $<$<CONFIG:Debug>:-fno-sanitize-recover=all>
+        $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
+  endif()
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  # msvc compiler options: https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category
+  target_compile_options(exmple-app
+    PRIVATE
+      # more warnings
+      /W4 /sdl)
+
+  # msvc linker options: https://learn.microsoft.com/en-us/cpp/build/reference/linker-options
+  target_link_options(exmple-app
+    PRIVATE
+      /VERBOSE)
+endif()
