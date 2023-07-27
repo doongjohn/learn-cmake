@@ -55,6 +55,26 @@ CPM.cmake is a cross-platform CMake script that adds dependency management capab
 - [Cross Compiling With CMake](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Cross%20Compiling%20With%20CMake.html)
 
 Example of providing a toolchain file to cmake.
+```cmake
+# set target operating to windows
+set(CMAKE_SYSTEM_NAME Windows)
+
+# set compiler to mingw
+set(CMAKE_C_COMPILER /usr/bin/x86_64-w64-mingw32-gcc)
+set(CMAKE_CXX_COMPILER /usr/bin/x86_64-w64-mingw32-g++)
+set(CMAKE_RC_COMPILER /usr/bin/x86_64-w64-mingw32-windres)
+
+# where is the target environment located
+set(CMAKE_FIND_ROOT_PATH /usr/x86_64-w64-mingw32)
+
+# adjust the default behavior of the FIND_XXX() commands:
+# search programs in the host environment
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+
+# search headers and libraries in the target environment
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+```
 ```fish
 cmake -S . -B build_mingw -G 'Ninja Multi-Config' -DCMAKE_TOOLCHAIN_FILE=~/mingw.cmake
 cmake --build build_mingw
