@@ -13,7 +13,7 @@
 
 ## Usage
 
-- generate build script:\
+- generate build file:\
   <https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html>
   ```fish
   cmake -S . -B build
