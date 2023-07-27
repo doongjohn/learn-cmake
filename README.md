@@ -56,6 +56,8 @@ CPM.cmake is a cross-platform CMake script that adds dependency management capab
 
 Example of providing a toolchain file to cmake.
 ```cmake
+# mingw.cmake
+
 # set target operating to windows
 set(CMAKE_SYSTEM_NAME Windows)
 
