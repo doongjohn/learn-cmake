@@ -41,6 +41,7 @@ CMake will create a new variable scope with each `add_subdirectory()` call.
 
 ## `FetchContent`
 
+- <https://cmake.org/cmake/help/latest/module/FetchContent.html>
 - <https://www.foonathan.net/2022/06/cmake-fetchcontent/>
 
 ## CPM
