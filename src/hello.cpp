@@ -2,6 +2,6 @@
 
 #include <iostream>
 
-void hello() {
+auto hello() -> void {
   std::cout << "Hello, world!\n";
 }
