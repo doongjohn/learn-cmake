@@ -47,20 +47,18 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
       $<$<CXX_COMPILER_ID:GNU>:-fdiagnostics-color>
       $<$<CXX_COMPILER_ID:Clang>:-fcolor-diagnostics>
       # more warnings
-      -Wall)
+      -Wall -Wextra)
 
-  # use sanitizers
   if (NOT WIN32)
+    # use sanitizers
+    set(SANITIZER_OPTIONS
+      $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
+      $<$<CONFIG:Debug>:-fno-sanitize-recover=all>
+      $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
     target_compile_options(example-app
-      PRIVATE
-        $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
-        $<$<CONFIG:Debug>:-fno-sanitize-recover=all>
-        $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
+      PRIVATE ${SANITIZER_OPTIONS})
     target_link_options(example-app
-      PRIVATE
-        $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
-        $<$<CONFIG:Debug>:-fno-sanitize-recover=all>
-        $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
+      PRIVATE ${SANITIZER_OPTIONS})
   endif()
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # msvc compiler options: https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category
