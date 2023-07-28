@@ -25,7 +25,13 @@
         [-v]
         [--config {Debug|Release|RelWithDebInfo}]
         [-t <target-name>]
+        [-j <max-parallel-jobs>]
   ```
+
+- How do I configure portable parallel builds in CMake?\
+  <https://stackoverflow.com/q/10688549>
+- Overriding a default option(...) value in CMake from a parent CMakeLists.txt\
+  <https://stackoverflow.com/q/3766740>
 
 ## `include` & `add_subdirectory`
 
