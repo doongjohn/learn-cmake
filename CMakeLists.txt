@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 3.25)
 # ln -s build/compile_commands.json compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Enable colored output for GNU/Clang compilers
+set(CMAKE_COLOR_DIAGNOSTICS ON)
+
 project(
   ExampleProject
   VERSION 0.1.0
@@ -41,11 +44,6 @@ target_sources(example-app
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   target_compile_options(example-app
     PRIVATE
-      # use colored output
-      $<$<C_COMPILER_ID:GNU>:-fdiagnostics-color>
-      $<$<C_COMPILER_ID:Clang>:-fcolor-diagnostics>
-      $<$<CXX_COMPILER_ID:GNU>:-fdiagnostics-color>
-      $<$<CXX_COMPILER_ID:Clang>:-fcolor-diagnostics>
       # more warnings
       -Wall -Wextra)
 
