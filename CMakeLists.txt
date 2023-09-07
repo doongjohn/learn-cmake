@@ -25,8 +25,8 @@ set_target_properties(example-app
 target_compile_features(example-app
   PRIVATE cxx_std_20)
 
-target_compile_definitions(example-app
-  PRIVATE HELLO=1)
+# target_compile_definitions(example-app
+#   PRIVATE HELLO=1)
 
 # https://crascit.com/2016/01/31/enhanced-source-file-handling-with-target_sources/
 file(GLOB_RECURSE SRC_FILES
@@ -58,7 +58,9 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     target_link_options(example-app
       PRIVATE ${SANITIZER_OPTIONS})
   endif()
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+endif()
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # msvc compiler options: https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category
   target_compile_options(example-app
     PRIVATE
