@@ -16,7 +16,7 @@
 - generate build file:\
   <https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html>
   ```fish
-  cmake -S . -B build
+  cmake -S . -B <build-dir>
         [-G 'Ninja Multi-Config']
   ```
   - to specify 32/64bit build
@@ -27,7 +27,7 @@
       `cmake ... -G ... -A x64`
 - build:
   ```fish
-  cmake --build build
+  cmake --build <build-dir>
         [-v]
         [--config {Debug|Release|RelWithDebInfo}]
         [-t <target-name>]
