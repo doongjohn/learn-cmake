@@ -23,8 +23,8 @@
     - **gcc / clang:**\
       compiler and linker flag: `-m32` `-m64`
     - **msvc:**\
-      `cmake -G ... -A Win32`\
-      `cmake -G ... -A x64`
+      `cmake ... -G ... -A Win32`\
+      `cmake ... -G ... -A x64`
 - build:
   ```fish
   cmake --build build
