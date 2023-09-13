@@ -19,6 +19,12 @@
   cmake -S . -B build
         [-G 'Ninja Multi-Config']
   ```
+  - to specifiy 32/64bit build
+    - **gcc / clang:**
+      compiler and linker flag: `-m32` `-m64`
+    - **msvc:**
+      `cmake -G ... -A Win32`\
+      `cmake -G ... -A x64`
 - build:
   ```fish
   cmake --build build
