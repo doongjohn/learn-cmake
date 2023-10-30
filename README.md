@@ -13,13 +13,13 @@
 
 ## Usage
 
-- Generate build file:\
+- Generate build file\
   <https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html>
   ```fish
   cmake -S . -B <build-dir>
         [-G {"Ninja Multi-Config"|"Visual Studio 17 2022"}]
   ```
-- Build:
+- Build
   ```fish
   cmake --build <build-dir>
         [-v]
@@ -34,7 +34,7 @@
     - **MSVC:**
         - 32bit: `cmake ... -G ... -A Win32`
         - 64bit: `cmake ... -G ... -A x64`
-- Convert MinGW `*.dll.a` to `*.dll`\
+- Convert MinGW `*.dll.a` to `*.lib`\
   `set(CMAKE_GNUtoMS ON)`\
   <https://cmake.org/cmake/help/latest/variable/CMAKE_GNUtoMS.html>
 - Configure portable parallel builds\
@@ -54,16 +54,16 @@ Record the specified message text in the log. If more than one message string is
 
 The optional `<mode>` keyword determines the type of message, which influences the way the message is handled:
 
-- FATAL_ERROR
-- SEND_ERROR
-- WARNING
-- AUTHOR_WARNING
-- DEPRECATION
-- NOTICE (default)
-- STATUS
-- VERBOSE
-- DEBUG
-- TRACE
+- `FATAL_ERROR`
+- `SEND_ERROR`
+- `WARNING`
+- `AUTHOR_WARNING`
+- `DEPRECATION`
+- `NOTICE` (default)
+- `STATUS`
+- `VERBOSE`
+- `DEBUG`
+- `TRACE`
 
 #### Reporting checks
 
@@ -71,13 +71,13 @@ A common pattern in CMake output is a message indicating the start of some sort 
 
 `message(<checkState> "message" ...)`
 
-where <checkState> must be one of the following:
+where `<checkState>` must be one of the following:
 
-- CHECK_START\
+- `CHECK_START`\
     Record a concise message about the check about to be performed.
-- CHECK_PASS\
+- `CHECK_PASS`\
     Record a successful result for a check.
-- CHECK_FAIL\
+- `CHECK_FAIL`\
     Record an unsuccessful result for a check.
 
 Checks may be nested and every CHECK_START should have exactly one matching CHECK_PASS or CHECK_FAIL. The CMAKE_MESSAGE_INDENT variable can also be used to add indenting to nested checks if desired. For example:
