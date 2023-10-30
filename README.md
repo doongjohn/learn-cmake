@@ -80,7 +80,7 @@ where `<checkState>` must be one of the following:
 - `CHECK_FAIL`\
     Record an unsuccessful result for a check.
 
-Checks may be nested and every CHECK_START should have exactly one matching CHECK_PASS or CHECK_FAIL. The CMAKE_MESSAGE_INDENT variable can also be used to add indenting to nested checks if desired. For example:
+Checks may be nested and every `CHECK_START` should have exactly one matching `CHECK_PASS` or `CHECK_FAIL`. The `CMAKE_MESSAGE_INDENT` variable can also be used to add indenting to nested checks if desired. For example:
 
 ```cmake
 message(CHECK_START "Finding my things")
