@@ -42,6 +42,10 @@
 - Overriding a default option(...) value from a parent CMakeLists.txt\
   <https://stackoverflow.com/q/3766740>
 
+### CMakePresets.json
+
+- <https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html>
+
 ### `message`
 
 - <https://cmake.org/cmake/help/latest/command/message.html>
@@ -130,6 +134,11 @@ CMake will create a new variable scope with each `add_subdirectory()` call.
 
 - <https://cmake.org/cmake/help/latest/module/FetchContent.html>
 - <https://www.foonathan.net/2022/06/cmake-fetchcontent/>
+
+### Dependency Providers
+
+- <https://cmake.org/cmake/help/latest/guide/using-dependencies/index.html#dependency-providers-overview>
+- <https://github.com/cpm-cmake/CPM.cmake/discussions/362>
 
 ## CPM
 
