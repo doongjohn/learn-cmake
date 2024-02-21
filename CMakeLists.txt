@@ -24,13 +24,6 @@ function(target_setup_cxx20 target output_name)
   target_compile_features(${target}
     PRIVATE cxx_std_20)
 
-  # https://crascit.com/2016/01/31/enhanced-source-file-handling-with-target_sources/
-  file(GLOB_RECURSE SOURCES
-    src/*.cpp
-    src/*.hpp)
-  target_sources(${target}
-    PRIVATE ${SOURCES})
-
   # enable sanitizers
   if (NOT WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     set(SANITIZER_OPTIONS
@@ -38,16 +31,23 @@ function(target_setup_cxx20 target output_name)
       $<$<CONFIG:Debug>:-fno-sanitize-recover=all>
       $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
 
-    target_compile_options(example-app
+    target_compile_options(${target}
       PRIVATE ${SANITIZER_OPTIONS})
 
-    target_link_options(example-app
+    target_link_options(${target}
       PRIVATE ${SANITIZER_OPTIONS})
   endif()
 endfunction()
 
 add_executable(example-app "")
 target_setup_cxx20(example-app app)
+
+# https://crascit.com/2016/01/31/enhanced-source-file-handling-with-target_sources/
+file(GLOB_RECURSE SOURCES
+  src/*.cpp
+  src/*.hpp)
+target_sources(${target}
+  PRIVATE ${SOURCES})
 
 # target_include_directories(example-app
 #   PRIVATE ${PROJECT_SOURCE_DIR}/include)
