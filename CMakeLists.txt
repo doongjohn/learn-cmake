@@ -46,7 +46,7 @@ target_setup_cxx20(example-app app)
 file(GLOB_RECURSE SOURCES
   src/*.cpp
   src/*.hpp)
-target_sources(${target}
+target_sources(example-app
   PRIVATE ${SOURCES})
 
 # target_include_directories(example-app
