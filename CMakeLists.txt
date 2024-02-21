@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.27)
 # ln -s build/compile_commands.json compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Enable colored output for GNU/Clang compilers
+# enable colored output for GNU/Clang compilers
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(
