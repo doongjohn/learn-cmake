@@ -6,8 +6,8 @@
 #endif
 
 auto main() -> int {
-  const auto str = std::string("C++");
-  std::cout << std::format("This is {} {}\n", str, 20);
+  const auto str = std::string{"CMake"};
+  std::cout << std::format("Built with {}\n", str);
 
 #ifdef HELLO
   hello();
