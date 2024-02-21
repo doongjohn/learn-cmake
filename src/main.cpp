@@ -5,9 +5,14 @@
 #include "hello.hpp"
 #endif
 
+template <class... T>
+auto format_print(const std::format_string<T...> fmt, T &&...args) -> void {
+  std::cout << std::format(fmt, args...);
+}
+
 auto main() -> int {
   const auto str = std::string{"CMake"};
-  std::cout << std::format("Built with {}\n", str);
+  format_print("Built with {}\n", str);
 
 #ifdef HELLO
   hello();
