@@ -11,32 +11,29 @@ project(
   LANGUAGES CXX
 )
 
-function(target_setup_cxx20 target output_name)
-  set_target_properties(${target}
-    PROPERTIES # https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
-    # EXCLUDE_FROM_ALL true
-    OUTPUT_NAME ${output_name})
-
-  target_compile_features(${target}
-    PRIVATE cxx_std_20)
-
-  # enable sanitizers
-  if (NOT WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
-    set(SANITIZER_OPTIONS
-      $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
-      $<$<CONFIG:Debug>:-fno-sanitize-recover=all>
-      $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
-
-    target_compile_options(${target}
-      PRIVATE ${SANITIZER_OPTIONS})
-
-    target_link_options(${target}
-      PRIVATE ${SANITIZER_OPTIONS})
-  endif()
-endfunction()
-
 add_executable(example-app "")
-target_setup_cxx20(example-app app)
+
+set_target_properties(${target}
+  PROPERTIES # https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
+  # EXCLUDE_FROM_ALL true
+  OUTPUT_NAME ${output_name})
+
+target_compile_features(${target}
+  PRIVATE cxx_std_20)
+
+# enable sanitizers
+if (NOT WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+  set(SANITIZER_OPTIONS
+    $<$<CONFIG:Debug>:-fno-omit-frame-pointer>
+    $<$<CONFIG:Debug>:-fno-sanitize-recover=all>
+    $<$<CONFIG:Debug>:-fsanitize=address,undefined>)
+
+  target_compile_options(${target}
+    PRIVATE ${SANITIZER_OPTIONS})
+
+  target_link_options(${target}
+    PRIVATE ${SANITIZER_OPTIONS})
+endif()
 
 # target_compile_definitions(example-app
 #   PRIVATE HELLO=1)
