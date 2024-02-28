@@ -1,10 +1,6 @@
 cmake_minimum_required(VERSION 3.27)
 
-# generate `compile_commands.json` (only for make and ninja)
-# ln -s build/compile_commands.json compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-# enable colored output for GNU/Clang compilers
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 project(
@@ -42,18 +38,14 @@ endfunction()
 add_executable(example-app "")
 target_setup_cxx20(example-app app)
 
-# https://crascit.com/2016/01/31/enhanced-source-file-handling-with-target_sources/
-file(GLOB_RECURSE SOURCES
-  src/*.cpp
-  src/*.hpp)
+# target_compile_definitions(example-app
+#   PRIVATE HELLO=1)
+
 target_sources(example-app
-  PRIVATE ${SOURCES})
+  PRIVATE src/main.cpp)
 
 # target_include_directories(example-app
 #   PRIVATE ${PROJECT_SOURCE_DIR}/include)
-
-# target_compile_definitions(example-app
-#   PRIVATE HELLO=1)
 
 # target_link_libraries(example-app
 #   library_name)
