@@ -18,9 +18,9 @@ add_executable(example-app "")
 target_compile_features(example-app PRIVATE cxx_std_20)
 
 # https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
-set_target_properties(
-  example-app
-  PROPERTIES
+set_property(
+  TARGET example-app
+  PROPERTY
     # EXCLUDE_FROM_ALL true
     OUTPUT_NAME "app"
 )
