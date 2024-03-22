@@ -13,6 +13,8 @@ project(
 
 add_executable(example-app "")
 
+# https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html#prop_gbl:CMAKE_C_KNOWN_FEATURES
+# https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_CXX_KNOWN_FEATURES.html#prop_gbl:CMAKE_CXX_KNOWN_FEATURES
 target_compile_features(example-app PRIVATE cxx_std_20)
 
 # https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
