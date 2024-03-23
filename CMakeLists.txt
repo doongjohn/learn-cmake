@@ -13,17 +13,9 @@ project(
 
 add_executable(example-app "")
 
-# https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html#prop_gbl:CMAKE_C_KNOWN_FEATURES
-# https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_CXX_KNOWN_FEATURES.html#prop_gbl:CMAKE_CXX_KNOWN_FEATURES
-target_compile_features(example-app PRIVATE cxx_std_20)
-
 # https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
-set_property(
-  TARGET example-app
-  PROPERTY
-    # EXCLUDE_FROM_ALL true
-    OUTPUT_NAME "app"
-)
+set_property(TARGET example-app PROPERTY OUTPUT_NAME "app")
+set_property(TARGET example-app PROPERTY CXX_STANDARD 20)
 
 # enable sanitizers
 if (NOT WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
