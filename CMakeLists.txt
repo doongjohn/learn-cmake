@@ -5,9 +5,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # enable colored output
 set(CMAKE_COLOR_DIAGNOSTICS ON)
-if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
-endif()
 
 project(
   ExampleProject
@@ -16,6 +13,11 @@ project(
   HOMEPAGE_URL ""
   LANGUAGES CXX
 )
+
+# enable colored output
+if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
+endif()
 
 add_executable(example-app "")
 
