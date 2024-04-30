@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <format>
 #include <iostream>
 
@@ -5,18 +6,13 @@
 #include "hello.hpp"
 #endif
 
-template <class... T>
-auto format_print(const std::format_string<T...> fmt, T &&...args) -> void {
-  std::cout << std::format(fmt, args...);
-}
-
 auto main() -> int {
-  const auto str = std::string{"CMake"};
-  format_print("Built with {}\n", str);
+  const auto cmake = "CMake";
+  std::cout << std::format("Built with {}\n", cmake);
 
 #ifdef HELLO
   hello();
 #endif
 
-  return 0;
+  return EXIT_SUCCESS;
 }
