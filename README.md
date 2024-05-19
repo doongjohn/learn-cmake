@@ -233,4 +233,3 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 cmake -S . -B build/windows_x64_mingw -G "Ninja Multi-Config" -DCMAKE_TOOLCHAIN_FILE=~/mingw.cmake
 cmake --build build/windows_x64_mingw
 ```
-
