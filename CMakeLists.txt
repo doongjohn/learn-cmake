@@ -26,8 +26,8 @@ set_property(TARGET example-app PROPERTY CXX_STANDARD 20)
 
 function(use_sanitizer target)
   # https://clang.llvm.org/docs/AddressSanitizer.html
-  # cmake -S . -B build/windows_x64_clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=true
-  set(USE_SANITIZER false CACHE BOOL "Use Sanitizer")
+  # cmake -S . -B build/windows_x64_clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=ON
+  set(USE_SANITIZER OFF CACHE BOOL "Use Sanitizer")
   if (USE_SANITIZER)
     # clang
     if ((CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
@@ -55,7 +55,6 @@ function(use_sanitizer target)
       else()
         string(REPLACE "Debug" "" msvc_rt ${msvc_rt})
         set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY ${msvc_rt})
-        unset(msvc_rt)
       endif()
       set(sanitizer_opts /fsanitize=address /Zi)
     endif()
@@ -63,7 +62,6 @@ function(use_sanitizer target)
     if (DEFINED sanitizer_opts)
       target_compile_options(${target} PRIVATE ${sanitizer_opts})
       target_link_options(${target} PRIVATE ${sanitizer_opts})
-      unset(sanitizer_opts)
     endif()
   endif()
 endfunction()
