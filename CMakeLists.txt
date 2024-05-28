@@ -24,47 +24,51 @@ add_executable(example-app "")
 set_property(TARGET example-app PROPERTY OUTPUT_NAME "app")
 set_property(TARGET example-app PROPERTY CXX_STANDARD 20)
 
-# https://clang.llvm.org/docs/AddressSanitizer.html
-# cmake -S . -B build/windows_x64_clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=true
-set(USE_SANITIZER false CACHE BOOL "Use Sanitizer")
-if (USE_SANITIZER)
-  # clang
-  if ((CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
-    if (LINUX OR APPLE OR WIN32)
+function(use_sanitizer target)
+  # https://clang.llvm.org/docs/AddressSanitizer.html
+  # cmake -S . -B build/windows_x64_clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=true
+  set(USE_SANITIZER false CACHE BOOL "Use Sanitizer")
+  if (USE_SANITIZER)
+    # clang
+    if ((CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
+      if (LINUX OR APPLE OR WIN32)
+        set(CMAKE_CXX_FLAGS_DEBUG "-O1")
+        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded)
+        set(sanitizer_opts -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
+      endif()
+    endif()
+
+    # gcc
+    if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+      if (LINUX OR APPLE)
+        set(CMAKE_CXX_FLAGS_DEBUG "-O1")
+        set(sanitizer_opts -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
+      endif()
+    endif()
+
+    # msvc
+    if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       set(CMAKE_CXX_FLAGS_DEBUG "-O1")
-      set_property(TARGET example-app PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded)
-      set(sanitizer_opts -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
+      get_property(msvc_rt TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY)
+      if (NOT DEFINED msvc_rt)
+        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>DLL)
+      else()
+        string(REPLACE "Debug" "" msvc_rt ${msvc_rt})
+        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY ${msvc_rt})
+        unset(msvc_rt)
+      endif()
+      set(sanitizer_opts /fsanitize=address /Zi)
+    endif()
+
+    if (DEFINED sanitizer_opts)
+      target_compile_options(${target} PRIVATE ${sanitizer_opts})
+      target_link_options(${target} PRIVATE ${sanitizer_opts})
+      unset(sanitizer_opts)
     endif()
   endif()
+endfunction()
 
-  # gcc
-  if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    if (LINUX OR APPLE)
-      set(CMAKE_CXX_FLAGS_DEBUG "-O1")
-      set(sanitizer_opts -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
-    endif()
-  endif()
-
-  # msvc
-  if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    set(CMAKE_CXX_FLAGS_DEBUG "-O1")
-    get_property(msvc_rt TARGET example-app PROPERTY MSVC_RUNTIME_LIBRARY)
-    if (NOT DEFINED msvc_rt)
-      set_property(TARGET example-app PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>DLL)
-    else()
-      string(REPLACE "Debug" "" msvc_rt ${msvc_rt})
-      set_property(TARGET example-app PROPERTY MSVC_RUNTIME_LIBRARY ${msvc_rt})
-      unset(msvc_rt)
-    endif()
-    set(sanitizer_opts /fsanitize=address /Zi)
-  endif()
-
-  if (DEFINED sanitizer_opts)
-    target_compile_options(example-app PRIVATE ${sanitizer_opts})
-    target_link_options(example-app PRIVATE ${sanitizer_opts})
-    unset(sanitizer_opts)
-  endif()
-endif()
+use_sanitizer(example-app)
 
 # target_compile_definitions(
 #   example-app
