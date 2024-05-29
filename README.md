@@ -182,11 +182,12 @@ add_library(<name> INTERFACE)
 - [CMakeDoc:FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html)
 - <https://www.foonathan.net/2022/06/cmake-fetchcontent/>
 
-## Cross-compilation
+## cmake-toolchains
 
+- [CMakeDoc:cmake-toolchains](https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html)
 - [Cross Compiling With CMake](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Cross%20Compiling%20With%20CMake.html)
 
-Example of providing a toolchain file to cmake.
+Example of providing a mingw toolchain file to cmake. (cross-compile windows exe in linux)
 ```cmake
 # mingw.cmake
 
@@ -215,7 +216,7 @@ cmake -S . -B build/windows_x64_mingw -G "Ninja Multi-Config" -DCMAKE_TOOLCHAIN_
 cmake --build build/windows_x64_mingw
 ```
 
-## CMakePresets
+## cmake-presets
 
 - [CMakeDoc:cmake-presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html)
 - <https://martin-fieber.de/blog/cmake-presets/>
@@ -235,14 +236,60 @@ cmake --build build/windows_x64_mingw
       "displayName": "clang (ninja multi-config)",
       "description": "clang (ninja multi-config)",
       "generator": "Ninja Multi-Config",
-      "binaryDir": "${sourceDir}/build/windows_x64_clang"
+      "binaryDir": "${sourceDir}/build/clang",
+      "environment": {
+        "C": "clang",
+        "CXX": "clang++"
+      }
     },
     {
       "name": "clang_sanitizer",
-      "displayName": "clang (use sanitizer, ninja multi-config)",
-      "description": "clang (use sanitizer, ninja multi-config)",
+      "displayName": "clang (ninja multi-config, use sanitizer)",
+      "description": "clang (ninja multi-config, use sanitizer)",
       "generator": "Ninja Multi-Config",
-      "binaryDir": "${sourceDir}/build/windows_x64_clang_san",
+      "binaryDir": "${sourceDir}/build/clang_san",
+      "environment": {
+        "C": "clang",
+        "CXX": "clang++"
+      },
+      "cacheVariables": {
+        "USE_SANITIZER": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      }
+    },
+    {
+      "name": "msvc",
+      "displayName": "msvc (ninja multi-config)",
+      "description": "msvc (ninja multi-config)",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      },
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/msvc",
+      "environment": {
+        "C": "cl.exe",
+        "CXX": "cl.exe"
+      }
+    },
+    {
+      "name": "msvc_sanitizer",
+      "displayName": "msvc (ninja multi-config, use sanitizer)",
+      "description": "msvc (ninja multi-config, use sanitizer)",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      },
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/msvc_san",
+      "environment": {
+        "C": "cl.exe",
+        "CXX": "cl.exe"
+      },
       "cacheVariables": {
         "USE_SANITIZER": {
           "type": "BOOL",
@@ -255,24 +302,49 @@ cmake --build build/windows_x64_mingw
     {
       "name": "clang",
       "configurePreset": "clang",
-      "targets": "target"
-    },
-    {
-      "name": "clang_sanitizer",
-      "configurePreset": "clang_sanitizer",
-      "targets": "target"
+      "targets": "target-name"
     },
     {
       "name": "clang release",
       "configurePreset": "clang",
-      "targets": "target",
+      "targets": "target-name",
       "configuration": "Release"
     },
     {
-      "name": "clang_sanitizer release",
+      "name": "clang_sanitizer",
       "configurePreset": "clang_sanitizer",
-      "targets": "target",
+      "targets": "target-name"
+    },
+    {
+      "name": "msvc",
+      "configurePreset": "msvc",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      },
+      "targets": "target-name"
+    },
+    {
+      "name": "msvc release",
+      "configurePreset": "msvc",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      },
+      "targets": "target-name",
       "configuration": "Release"
+    },
+    {
+      "name": "msvc_sanitizer",
+      "configurePreset": "msvc_sanitizer",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      },
+      "targets": "target-name"
     }
   ]
 }
@@ -289,6 +361,11 @@ cmake . --preset 'preset name'
 cmake --build --list-presets
 cmake --build --preset 'preset name'
 ```
+
+## cmake-file-api
+
+- [CMakeDoc:cmake-file-api](https://cmake.org/cmake/help/latest/manual/cmake-file-api.7.html)
+- [Retrieve build information](https://blog.insane.engineer/post/cmake_build_information/)
 
 ## CPM
 
