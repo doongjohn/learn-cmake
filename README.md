@@ -16,7 +16,7 @@
 
 ## Configure
 
-- [CMakeDoc:cmake-generators](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html)
+- [CMakeDoc: cmake-generators](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html)
 
 ```fish
 cmake -S . -B <build-dir>
@@ -75,7 +75,7 @@ cmake --build <build-dir>
 
 ## `message`
 
-- [CMakeDoc:message](https://cmake.org/cmake/help/latest/command/message.html)
+- [CMakeDoc: message](https://cmake.org/cmake/help/latest/command/message.html)
 
 ### General messages
 
@@ -148,7 +148,7 @@ Output from the above would appear something like the following:
 
 ## `target_sources`
 
-- [CMakeDoc:target_sources](https://cmake.org/cmake/help/latest/command/target_sources.html#command:target_sources)
+- [CMakeDoc: target_sources](https://cmake.org/cmake/help/latest/command/target_sources.html#command:target_sources)
 
 ```cmake
 target_sources(some_target
@@ -168,7 +168,7 @@ If you provide `BASE_DIRS` for `PUBLIC/INTERFACE` `FILE_SET HEADERS` it will aut
 
 ## `add_library`
 
-- [CMakeDoc:add_library](https://cmake.org/cmake/help/latest/command/add_library.html)
+- [CMakeDoc: add_library](https://cmake.org/cmake/help/latest/command/add_library.html)
 
 ```cmake
 add_library(<name> STATIC <sources>...)
@@ -179,12 +179,12 @@ add_library(<name> INTERFACE)
 
 ## `FetchContent`
 
-- [CMakeDoc:FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html)
+- [CMakeDoc: FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html)
 - <https://www.foonathan.net/2022/06/cmake-fetchcontent/>
 
 ## cmake-toolchains
 
-- [CMakeDoc:cmake-toolchains](https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html)
+- [CMakeDoc: cmake-toolchains](https://cmake.org/cmake/help/latest/manual/cmake-toolchains.7.html)
 - [Cross Compiling With CMake](https://cmake.org/cmake/help/book/mastering-cmake/chapter/Cross%20Compiling%20With%20CMake.html)
 
 Example of providing a mingw toolchain file to cmake. (cross-compile windows exe in linux)
@@ -218,7 +218,7 @@ cmake --build build/windows_x64_mingw
 
 ## cmake-presets
 
-- [CMakeDoc:cmake-presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html)
+- [CMakeDoc: cmake-presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html)
 - <https://martin-fieber.de/blog/cmake-presets/>
 - <https://www.youtube.com/watch?v=vKUaWxemtWI>
 
@@ -364,7 +364,7 @@ cmake --build --preset 'preset name'
 
 ## cmake-file-api
 
-- [CMakeDoc:cmake-file-api](https://cmake.org/cmake/help/latest/manual/cmake-file-api.7.html)
+- [CMakeDoc: cmake-file-api](https://cmake.org/cmake/help/latest/manual/cmake-file-api.7.html)
 - [Retrieve build information](https://blog.insane.engineer/post/cmake_build_information/)
 
 ## CPM
