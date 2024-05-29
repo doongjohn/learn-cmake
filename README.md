@@ -55,7 +55,7 @@ cmake -S . -B <build-dir>
     - **x86_x64 Cross Tools Command Prompt for VS 2022**: Use x86 compiler to compile for a x64 machine
 2. Configure CMake from the developer command prompt.
     ```fish
-    cmake -S . -B build\windows_x64_msvc -G "Ninja Multi-Config"
+    cmake -S . -B build\msvc -G "Ninja Multi-Config"
     ```
 
 > [!NOTE]\
@@ -213,8 +213,8 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 ```
 
 ```fish
-cmake -S . -B build/windows_x64_mingw -G "Ninja Multi-Config" -DCMAKE_TOOLCHAIN_FILE=~/mingw.cmake
-cmake --build build/windows_x64_mingw
+cmake -S . -B build/mingw -G "Ninja Multi-Config" -DCMAKE_TOOLCHAIN_FILE=~/mingw.cmake
+cmake --build build/mingw
 ```
 
 ## cmake-presets
