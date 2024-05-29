@@ -7,8 +7,8 @@
 #endif
 
 auto main() -> int {
-  const auto cmake = "CMake";
-  std::cout << std::format("Built with {}\n", cmake);
+  const auto str = "CMake";
+  std::cout << std::format("Built with {}\n", str);
 
 #ifdef HELLO
   hello();
