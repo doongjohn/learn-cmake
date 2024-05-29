@@ -1,7 +1,7 @@
 .vscode/
-
 .cache/
 build/
 vendor/
 
-compile_commands.json
+.clangd
+CMakeUserPresets.json

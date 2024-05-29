@@ -1,0 +1,155 @@
+{
+  "version": 7,
+  "configurePresets": [
+    {
+      "name": "gcc",
+      "displayName": "gcc (ninja multi-config)",
+      "description": "gcc (ninja multi-config)",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/gcc",
+      "environment": {
+        "C": "gcc",
+        "CXX": "g++"
+      }
+    },
+    {
+      "name": "gcc_sanitizer",
+      "displayName": "gcc (ninja multi-config, use sanitizer)",
+      "description": "gcc (ninja multi-config, use sanitizer)",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/gcc_san",
+      "environment": {
+        "C": "gcc",
+        "CXX": "g++"
+      },
+      "cacheVariables": {
+        "USE_SANITIZER": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      }
+    },
+    {
+      "name": "clang",
+      "displayName": "clang (ninja multi-config)",
+      "description": "clang (ninja multi-config)",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/clang",
+      "environment": {
+        "C": "clang",
+        "CXX": "clang++"
+      }
+    },
+    {
+      "name": "clang_sanitizer",
+      "displayName": "clang (ninja multi-config, use sanitizer)",
+      "description": "clang (ninja multi-config, use sanitizer)",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/clang_san",
+      "environment": {
+        "C": "clang",
+        "CXX": "clang++"
+      },
+      "cacheVariables": {
+        "USE_SANITIZER": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      }
+    },
+    {
+      "name": "msvc",
+      "displayName": "msvc (ninja multi-config)",
+      "description": "msvc (ninja multi-config)",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      },
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/msvc",
+      "environment": {
+        "C": "cl.exe",
+        "CXX": "cl.exe"
+      }
+    },
+    {
+      "name": "msvc_sanitizer",
+      "displayName": "msvc (ninja multi-config, use sanitizer)",
+      "description": "msvc (ninja multi-config, use sanitizer)",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      },
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/msvc_san",
+      "environment": {
+        "C": "cl.exe",
+        "CXX": "cl.exe"
+      },
+      "cacheVariables": {
+        "USE_SANITIZER": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "gcc",
+      "configurePreset": "gcc"
+    },
+    {
+      "name": "gcc release",
+      "configurePreset": "gcc",
+      "configuration": "Release"
+    },
+    {
+      "name": "gcc_sanitizer",
+      "configurePreset": "gcc_sanitizer"
+    },
+    {
+      "name": "clang",
+      "configurePreset": "clang"
+    },
+    {
+      "name": "clang release",
+      "configurePreset": "clang",
+      "configuration": "Release"
+    },
+    {
+      "name": "clang_sanitizer",
+      "configurePreset": "clang_sanitizer"
+    },
+    {
+      "name": "msvc",
+      "configurePreset": "msvc",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      }
+    },
+    {
+      "name": "msvc release",
+      "configurePreset": "msvc",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      },
+      "configuration": "Release"
+    },
+    {
+      "name": "msvc_sanitizer",
+      "configurePreset": "msvc_sanitizer",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "$env{VSINSTALLDIR}",
+        "rhs": ""
+      }
+    }
+  ]
+}
