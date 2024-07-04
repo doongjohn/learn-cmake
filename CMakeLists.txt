@@ -8,7 +8,7 @@ set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 function(use_sanitizer target)
   # https://clang.llvm.org/docs/AddressSanitizer.html
-  # cmake -S . -B build/windows_x64_clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=ON
+  # cmake -S . -B build/clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=ON
   set(USE_SANITIZER OFF CACHE BOOL "Use Sanitizer")
   if (USE_SANITIZER)
     # clang
