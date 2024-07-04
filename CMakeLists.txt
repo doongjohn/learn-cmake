@@ -6,24 +6,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # enable colored output
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
-project(
-  ExampleProject
-  VERSION 0.1.0
-  DESCRIPTION ""
-  HOMEPAGE_URL ""
-)
-
-# enable colored output
-if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
-endif()
-
-add_executable(example-app "")
-
-# https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
-set_property(TARGET example-app PROPERTY OUTPUT_NAME "app")
-set_property(TARGET example-app PROPERTY CXX_STANDARD 20)
-
 function(use_sanitizer target)
   # https://clang.llvm.org/docs/AddressSanitizer.html
   # cmake -S . -B build/windows_x64_clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=ON
@@ -66,13 +48,25 @@ function(use_sanitizer target)
   endif()
 endfunction()
 
-use_sanitizer(example-app)
+project(
+  ExampleProject
+  VERSION 0.1.0
+  DESCRIPTION ""
+  HOMEPAGE_URL ""
+)
 
-# target_compile_definitions(
-#   example-app
-#   PRIVATE
-#     HELLO=1
-# )
+# enable colored output
+if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
+endif()
+
+add_executable(example-app "")
+
+# https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
+set_property(TARGET example-app PROPERTY OUTPUT_NAME "app")
+set_property(TARGET example-app PROPERTY CXX_STANDARD 20)
+
+use_sanitizer(example-app)
 
 target_sources(
   example-app
@@ -80,6 +74,12 @@ target_sources(
     src/main.cpp
     src/hello.cpp
 )
+
+# target_compile_definitions(
+#   example-app
+#   PRIVATE
+#     HELLO=1
+# )
 
 # target_include_directories(
 #   example-app
