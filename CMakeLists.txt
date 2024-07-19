@@ -55,7 +55,7 @@ project(
   HOMEPAGE_URL ""
 )
 
-# enable colored output
+# enable colored output (for windows clang)
 if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
 endif()

@@ -8,7 +8,7 @@
       "generator": "Ninja Multi-Config",
       "binaryDir": "${sourceDir}/build/gcc",
       "environment": {
-        "C": "gcc",
+        "CC": "gcc",
         "CXX": "g++"
       }
     },
@@ -19,7 +19,7 @@
       "generator": "Ninja Multi-Config",
       "binaryDir": "${sourceDir}/build/gcc_san",
       "environment": {
-        "C": "gcc",
+        "CC": "gcc",
         "CXX": "g++"
       },
       "cacheVariables": {
@@ -36,7 +36,7 @@
       "generator": "Ninja Multi-Config",
       "binaryDir": "${sourceDir}/build/clang",
       "environment": {
-        "C": "clang",
+        "CC": "clang",
         "CXX": "clang++"
       }
     },
@@ -47,7 +47,7 @@
       "generator": "Ninja Multi-Config",
       "binaryDir": "${sourceDir}/build/clang_san",
       "environment": {
-        "C": "clang",
+        "CC": "clang",
         "CXX": "clang++"
       },
       "cacheVariables": {
@@ -69,7 +69,7 @@
       "generator": "Ninja Multi-Config",
       "binaryDir": "${sourceDir}/build/msvc",
       "environment": {
-        "C": "cl.exe",
+        "CC": "cl.exe",
         "CXX": "cl.exe"
       }
     },
