@@ -20,7 +20,7 @@
 
 ```fish
 cmake -S . -B <build-dir>
-    [-G {"Ninja Multi-Config"|"Visual Studio 17 2022"|...}]
+    [-G {"Ninja"|"Ninja Multi-Config"|"Visual Studio 17 2022"|...}]
 ```
 
 ### compile_commands.json
