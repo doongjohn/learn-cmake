@@ -306,12 +306,6 @@ cmake --build build/mingw
       "targets": "target-name"
     },
     {
-      "name": "clang release",
-      "configurePreset": "clang",
-      "targets": "target-name",
-      "configuration": "Release"
-    },
-    {
       "name": "clang_sanitizer",
       "configurePreset": "clang_sanitizer",
       "targets": "target-name"
@@ -325,17 +319,6 @@ cmake --build build/mingw
         "rhs": ""
       },
       "targets": "target-name"
-    },
-    {
-      "name": "msvc release",
-      "configurePreset": "msvc",
-      "condition": {
-        "type": "notEquals",
-        "lhs": "$env{VSINSTALLDIR}",
-        "rhs": ""
-      },
-      "targets": "target-name",
-      "configuration": "Release"
     },
     {
       "name": "msvc_sanitizer",
