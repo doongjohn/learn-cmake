@@ -11,7 +11,7 @@ function(use_sanitizer target)
   # cmake -B build/clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=ON
   set(USE_SANITIZER OFF CACHE BOOL "Use Sanitizer")
   if (USE_SANITIZER)
-    message(STATUS "Setting up sanitizer for (system: ${CMAKE_SYSTEM_NAME}) (compiler: ${CMAKE_CXX_COMPILER_ID}) (target: ${target})")
+    message(STATUS "Setting up sanitizer for (target: ${target}, system: ${CMAKE_SYSTEM_NAME}, compiler: ${CMAKE_CXX_COMPILER_ID})")
 
     # clang
     if ((CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
@@ -48,7 +48,7 @@ function(use_sanitizer target)
       target_compile_options(${target} PRIVATE ${sanitizer_opts})
       target_link_options(${target} PRIVATE ${sanitizer_opts})
     else()
-      message(FATAL_ERROR "Failed to setup sanitizer for (system: ${CMAKE_SYSTEM_NAME}) (compiler: ${CMAKE_CXX_COMPILER_ID}) (target: ${target})")
+      message(FATAL_ERROR "Failed to setup sanitizer for (target: ${target}, system: ${CMAKE_SYSTEM_NAME}, compiler: ${CMAKE_CXX_COMPILER_ID})")
     endif()
   endif()
 endfunction()
