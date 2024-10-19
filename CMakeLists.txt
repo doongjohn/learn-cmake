@@ -6,9 +6,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # enable colored output
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
+# https://clang.llvm.org/docs/AddressSanitizer.html
+# cmake -B build/clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=ON
 function(use_sanitizer target)
-  # https://clang.llvm.org/docs/AddressSanitizer.html
-  # cmake -B build/clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=ON
   set(USE_SANITIZER OFF CACHE BOOL "Use Sanitizer")
   if (USE_SANITIZER)
     message(STATUS "Setting up sanitizer for (target: ${target}, system: ${CMAKE_SYSTEM_NAME}, compiler: ${CMAKE_CXX_COMPILER_ID})")
@@ -78,6 +78,9 @@ target_sources(
   PRIVATE
     src/main.cpp
     src/hello.cpp
+  PRIVATE
+    FILE_SET CXX_MODULES FILES # c++20 modules
+      src/foo.cppm
 )
 
 # target_compile_definitions(

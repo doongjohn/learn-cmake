@@ -13,7 +13,7 @@
       }
     },
     {
-      "name": "gcc_sanitizer",
+      "name": "gcc sanitizer",
       "displayName": "gcc (ninja multi-config, use sanitizer)",
       "description": "gcc (ninja multi-config, use sanitizer)",
       "generator": "Ninja Multi-Config",
@@ -41,7 +41,7 @@
       }
     },
     {
-      "name": "clang_sanitizer",
+      "name": "clang sanitizer",
       "displayName": "clang (ninja multi-config, use sanitizer)",
       "description": "clang (ninja multi-config, use sanitizer)",
       "generator": "Ninja Multi-Config",
@@ -74,7 +74,7 @@
       }
     },
     {
-      "name": "msvc_sanitizer",
+      "name": "msvc sanitizer",
       "displayName": "msvc (ninja multi-config, use sanitizer)",
       "description": "msvc (ninja multi-config, use sanitizer)",
       "condition": {
@@ -107,8 +107,8 @@
       "configuration": "Release"
     },
     {
-      "name": "gcc_sanitizer",
-      "configurePreset": "gcc_sanitizer"
+      "name": "gcc sanitizer",
+      "configurePreset": "gcc sanitizer"
     },
     {
       "name": "clang",
@@ -120,8 +120,8 @@
       "configuration": "Release"
     },
     {
-      "name": "clang_sanitizer",
-      "configurePreset": "clang_sanitizer"
+      "name": "clang sanitizer",
+      "configurePreset": "clang sanitizer"
     },
     {
       "name": "msvc",
@@ -143,8 +143,8 @@
       "configuration": "Release"
     },
     {
-      "name": "msvc_sanitizer",
-      "configurePreset": "msvc_sanitizer",
+      "name": "msvc sanitizer",
+      "configurePreset": "msvc sanitizer",
       "condition": {
         "type": "notEquals",
         "lhs": "$env{VSINSTALLDIR}",
