@@ -102,22 +102,12 @@
       "configurePreset": "gcc"
     },
     {
-      "name": "gcc release",
-      "configurePreset": "gcc",
-      "configuration": "Release"
-    },
-    {
       "name": "gcc sanitizer",
       "configurePreset": "gcc sanitizer"
     },
     {
       "name": "clang",
       "configurePreset": "clang"
-    },
-    {
-      "name": "clang release",
-      "configurePreset": "clang",
-      "configuration": "Release"
     },
     {
       "name": "clang sanitizer",
@@ -131,16 +121,6 @@
         "lhs": "$env{VSINSTALLDIR}",
         "rhs": ""
       }
-    },
-    {
-      "name": "msvc release",
-      "configurePreset": "msvc",
-      "condition": {
-        "type": "notEquals",
-        "lhs": "$env{VSINSTALLDIR}",
-        "rhs": ""
-      },
-      "configuration": "Release"
     },
     {
       "name": "msvc sanitizer",
