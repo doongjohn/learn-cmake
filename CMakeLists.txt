@@ -81,6 +81,7 @@ target_sources(
   PRIVATE
     FILE_SET CXX_MODULES FILES # c++20 modules
       src/foo.cppm
+      src/bar.cppm
 )
 
 # target_compile_definitions(
