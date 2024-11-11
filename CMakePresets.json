@@ -5,68 +5,70 @@
       "name": "gcc",
       "displayName": "gcc (ninja multi-config)",
       "description": "gcc (ninja multi-config)",
-      "generator": "Ninja Multi-Config",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/gcc",
       "environment": {
         "CC": "gcc",
         "CXX": "g++"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "gcc sanitizer",
-      "displayName": "gcc (ninja multi-config, use sanitizer)",
-      "description": "gcc (ninja multi-config, use sanitizer)",
-      "generator": "Ninja Multi-Config",
+      "displayName": "gcc (ninja, use sanitizer)",
+      "description": "gcc (ninja, use sanitizer)",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/gcc_san",
       "environment": {
         "CC": "gcc",
         "CXX": "g++"
       },
       "cacheVariables": {
-        "USE_SANITIZER": {
-          "type": "BOOL",
-          "value": "ON"
-        }
+        "CMAKE_BUILD_TYPE": "Debug",
+        "USE_SANITIZER": "ON"
       }
     },
     {
       "name": "clang",
-      "displayName": "clang (ninja multi-config)",
-      "description": "clang (ninja multi-config)",
-      "generator": "Ninja Multi-Config",
+      "displayName": "clang (ninja)",
+      "description": "clang (ninja)",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/clang",
       "environment": {
         "CC": "clang",
         "CXX": "clang++"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
       "name": "clang sanitizer",
-      "displayName": "clang (ninja multi-config, use sanitizer)",
-      "description": "clang (ninja multi-config, use sanitizer)",
-      "generator": "Ninja Multi-Config",
+      "displayName": "clang (ninja, use sanitizer)",
+      "description": "clang (ninja, use sanitizer)",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/clang_san",
       "environment": {
         "CC": "clang",
         "CXX": "clang++"
       },
       "cacheVariables": {
-        "USE_SANITIZER": {
-          "type": "BOOL",
-          "value": "ON"
-        }
+        "CMAKE_BUILD_TYPE": "Debug",
+        "USE_SANITIZER": "ON"
       }
     },
     {
       "name": "msvc",
-      "displayName": "msvc (ninja multi-config)",
-      "description": "msvc (ninja multi-config)",
+      "displayName": "msvc (ninja)",
+      "description": "msvc (ninja)",
       "condition": {
         "type": "notEquals",
         "lhs": "$env{VSINSTALLDIR}",
         "rhs": ""
       },
-      "generator": "Ninja Multi-Config",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/msvc",
       "environment": {
         "CC": "cl.exe",
@@ -75,24 +77,22 @@
     },
     {
       "name": "msvc sanitizer",
-      "displayName": "msvc (ninja multi-config, use sanitizer)",
-      "description": "msvc (ninja multi-config, use sanitizer)",
+      "displayName": "msvc (ninja, use sanitizer)",
+      "description": "msvc (ninja, use sanitizer)",
       "condition": {
         "type": "notEquals",
         "lhs": "$env{VSINSTALLDIR}",
         "rhs": ""
       },
-      "generator": "Ninja Multi-Config",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/msvc_san",
       "environment": {
         "C": "cl.exe",
         "CXX": "cl.exe"
       },
       "cacheVariables": {
-        "USE_SANITIZER": {
-          "type": "BOOL",
-          "value": "ON"
-        }
+        "CMAKE_BUILD_TYPE": "Debug",
+        "USE_SANITIZER": "ON"
       }
     }
   ],
