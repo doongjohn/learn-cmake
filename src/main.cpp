@@ -16,9 +16,10 @@ auto main() -> int {
   hello();
 #endif
 
-  foo::print_foo_bar();
+  foo::hello_foobar();
   auto b = foo::make_bar();
-  std::cout << b.str << '\n';
+  b.str = "BAR";
+  b.print();
 
   return EXIT_SUCCESS;
 }

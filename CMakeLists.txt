@@ -77,11 +77,12 @@ target_sources(
   example-app
   PRIVATE
     src/main.cpp
+    src/hello.hpp
     src/hello.cpp
   PRIVATE
     FILE_SET CXX_MODULES FILES # c++20 modules
-      src/foo.cppm
-      src/bar.cppm
+      src/modules/foo.cppm
+      src/modules/bar.cppm
 )
 
 # target_compile_definitions(

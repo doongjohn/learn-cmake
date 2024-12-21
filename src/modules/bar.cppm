@@ -8,10 +8,14 @@ namespace bar {
 
 export struct Bar {
   std::string str = "bar";
+
+  auto print() -> void {
+    std::cout << str;
+  }
 };
 
-export auto print_bar() -> void {
-  std::cout << "bar\n";
+export auto hello_bar() -> void {
+  std::cout << "hello from bar\n";
 }
 
 } // namespace bar
