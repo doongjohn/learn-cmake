@@ -4,10 +4,10 @@
   "configurePresets": [
     {
       "name": "gcc",
-      "displayName": "gcc (ninja multi-config)",
-      "description": "gcc (ninja multi-config)",
+      "displayName": "gcc (ninja)",
+      "description": "gcc (ninja)",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/gcc",
+      "binaryDir": "${sourceDir}/build/gcc_release",
       "environment": {
         "CC": "gcc",
         "CXX": "g++"
@@ -17,11 +17,11 @@
       }
     },
     {
-      "name": "gcc sanitizer",
-      "displayName": "gcc (ninja, use sanitizer)",
-      "description": "gcc (ninja, use sanitizer)",
+      "name": "gcc debug",
+      "displayName": "gcc (ninja, sanitizer)",
+      "description": "gcc (ninja, sanitizer)",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/gcc_san",
+      "binaryDir": "${sourceDir}/build/gcc_debug",
       "environment": {
         "CC": "gcc",
         "CXX": "g++"
@@ -36,7 +36,7 @@
       "displayName": "clang (ninja)",
       "description": "clang (ninja)",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/clang",
+      "binaryDir": "${sourceDir}/build/clang_release",
       "environment": {
         "CC": "clang",
         "CXX": "clang++"
@@ -46,11 +46,11 @@
       }
     },
     {
-      "name": "clang sanitizer",
-      "displayName": "clang (ninja, use sanitizer)",
-      "description": "clang (ninja, use sanitizer)",
+      "name": "clang debug",
+      "displayName": "clang (ninja, sanitizer)",
+      "description": "clang (ninja, sanitizer)",
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/clang_san",
+      "binaryDir": "${sourceDir}/build/clang_debug",
       "environment": {
         "CC": "clang",
         "CXX": "clang++"
@@ -70,23 +70,26 @@
         "rhs": ""
       },
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/msvc",
+      "binaryDir": "${sourceDir}/build/msvc_release",
       "environment": {
         "CC": "cl.exe",
         "CXX": "cl.exe"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
       }
     },
     {
-      "name": "msvc sanitizer",
-      "displayName": "msvc (ninja, use sanitizer)",
-      "description": "msvc (ninja, use sanitizer)",
+      "name": "msvc debug",
+      "displayName": "msvc (ninja, sanitizer)",
+      "description": "msvc (ninja, sanitizer)",
       "condition": {
         "type": "notEquals",
         "lhs": "$env{VSINSTALLDIR}",
         "rhs": ""
       },
       "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/msvc_san",
+      "binaryDir": "${sourceDir}/build/msvc_debug",
       "environment": {
         "C": "cl.exe",
         "CXX": "cl.exe"
@@ -103,16 +106,16 @@
       "configurePreset": "gcc"
     },
     {
-      "name": "gcc sanitizer",
-      "configurePreset": "gcc sanitizer"
+      "name": "gcc debug",
+      "configurePreset": "gcc debug"
     },
     {
       "name": "clang",
       "configurePreset": "clang"
     },
     {
-      "name": "clang sanitizer",
-      "configurePreset": "clang sanitizer"
+      "name": "clang debug",
+      "configurePreset": "clang debug"
     },
     {
       "name": "msvc",
@@ -124,8 +127,8 @@
       }
     },
     {
-      "name": "msvc sanitizer",
-      "configurePreset": "msvc sanitizer",
+      "name": "msvc debug",
+      "configurePreset": "msvc debug",
       "condition": {
         "type": "notEquals",
         "lhs": "$env{VSINSTALLDIR}",
