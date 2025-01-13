@@ -10,7 +10,7 @@ export struct Bar {
   std::string str = "bar";
 
   auto print() -> void {
-    std::cout << str;
+    std::cout << str << '\n';
   }
 };
 
