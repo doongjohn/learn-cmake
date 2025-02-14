@@ -7,7 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 # https://clang.llvm.org/docs/AddressSanitizer.html
-# cmake -B build/clang_san -G "Ninja Multi-Config" -DUSE_SANITIZER:BOOL=ON
+# cmake -B build/clang_debug -G "Ninja" -DCMAKE_BUILD_TYPE=Debug -DUSE_SANITIZER:BOOL=ON
 function(use_sanitizer target)
   set(USE_SANITIZER OFF CACHE BOOL "Use Sanitizer")
   if (USE_SANITIZER)
@@ -60,7 +60,7 @@ project(
   HOMEPAGE_URL ""
 )
 
-# enable colored output (for windows clang)
+# enable colored output for clang on windows
 if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
 endif()
