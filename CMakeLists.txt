@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.28)
 
-# generate compile_commands.json
+# Generate "compile_commands.json".
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# enable colored output
+# Enable colored output.
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 # https://clang.llvm.org/docs/AddressSanitizer.html
@@ -13,7 +13,7 @@ function(use_sanitizer target)
   if (USE_SANITIZER)
     message(STATUS "Setting up sanitizer for (target: ${target}, system: ${CMAKE_SYSTEM_NAME}, compiler: ${CMAKE_CXX_COMPILER_ID})")
 
-    # clang
+    # Clang
     if ((CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
       if (LINUX OR APPLE OR WIN32)
         set(CMAKE_CXX_FLAGS_DEBUG "-O1")
@@ -22,7 +22,7 @@ function(use_sanitizer target)
       endif()
     endif()
 
-    # gcc
+    # GCC
     if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
       if (LINUX OR APPLE)
         set(CMAKE_CXX_FLAGS_DEBUG "-O1")
@@ -30,7 +30,7 @@ function(use_sanitizer target)
       endif()
     endif()
 
-    # msvc
+    # MSVC
     if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
       set(CMAKE_CXX_FLAGS_DEBUG "-O1")
       get_property(msvc_rt TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY)
@@ -43,7 +43,7 @@ function(use_sanitizer target)
       set(sanitizer_opts /fsanitize=address /Zi)
     endif()
 
-    # apply sanitizer options
+    # Apply sanitizer options.
     if (DEFINED sanitizer_opts)
       target_compile_options(${target} PRIVATE ${sanitizer_opts})
       target_link_options(${target} PRIVATE ${sanitizer_opts})
@@ -61,9 +61,18 @@ project(
   LANGUAGES CXX
 )
 
-# enable colored output for clang on windows
+# Enable colored output for clang on windows.
 if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
+endif()
+
+# Link time optimization.
+include(CheckIPOSupported)
+check_ipo_supported(RESULT ipo_supported OUTPUT ipo_error)
+if(ipo_supported)
+  message(STATUS "IPO supported")
+else()
+  message(STATUS "IPO not supported: <${ipo_error}>")
 endif()
 
 add_executable(example-app "")
@@ -71,6 +80,9 @@ add_executable(example-app "")
 # https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
 set_property(TARGET example-app PROPERTY OUTPUT_NAME "app")
 set_property(TARGET example-app PROPERTY CXX_STANDARD 20)
+if(ipo_supported)
+  set_property(TARGET example-app PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif()
 
 use_sanitizer(example-app)
 
@@ -81,7 +93,7 @@ target_sources(
     src/hello.hpp
     src/hello.cpp
   PRIVATE
-    FILE_SET CXX_MODULES FILES # c++20 modules
+    FILE_SET CXX_MODULES FILES # C++20 modules
       src/modules/foo.cppm
       src/modules/bar.cppm
 )
@@ -114,7 +126,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  # msvc compiler options: https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category
+  # MSVC compiler options: https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category
   target_compile_options(
     example-app
     PRIVATE
