@@ -58,6 +58,7 @@ project(
   VERSION 0.1.0
   DESCRIPTION ""
   HOMEPAGE_URL ""
+  LANGUAGES CXX
 )
 
 # enable colored output for clang on windows
