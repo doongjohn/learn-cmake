@@ -67,10 +67,12 @@ if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # Link time optimization.
+# https://stackoverflow.com/questions/31355692/how-do-i-enable-link-time-optimization-lto-with-cmake
 include(CheckIPOSupported)
 check_ipo_supported(RESULT ipo_supported OUTPUT ipo_error)
 if(ipo_supported)
   message(STATUS "IPO supported")
+  set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 else()
   message(STATUS "IPO not supported: <${ipo_error}>")
 endif()
@@ -80,9 +82,6 @@ add_executable(example-app "")
 # https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
 set_property(TARGET example-app PROPERTY OUTPUT_NAME "app")
 set_property(TARGET example-app PROPERTY CXX_STANDARD 20)
-if(ipo_supported)
-  set_property(TARGET example-app PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-endif()
 
 use_sanitizer(example-app)
 
