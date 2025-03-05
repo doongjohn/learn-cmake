@@ -18,7 +18,8 @@ function(use_sanitizer target)
       if (LINUX OR APPLE OR WIN32)
         set(CMAKE_CXX_FLAGS_DEBUG "-O1")
         set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded)
-        set(sanitizer_opts -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
+        set(sanitizer_opts_compiler -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
+        set(sanitizer_opts_linker -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
       endif()
     endif()
 
@@ -26,13 +27,13 @@ function(use_sanitizer target)
     if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
       if (LINUX OR APPLE)
         set(CMAKE_CXX_FLAGS_DEBUG "-O1")
-        set(sanitizer_opts -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
+        set(sanitizer_opts_compiler -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
+        set(sanitizer_opts_linker -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
       endif()
     endif()
 
     # MSVC
     if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-      set(CMAKE_CXX_FLAGS_DEBUG "-O1")
       get_property(msvc_rt TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY)
       if (NOT DEFINED msvc_rt)
         set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>DLL)
@@ -40,13 +41,14 @@ function(use_sanitizer target)
         string(REPLACE "Debug" "" msvc_rt ${msvc_rt})
         set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY ${msvc_rt})
       endif()
-      set(sanitizer_opts /fsanitize=address /Zi)
+      set(sanitizer_opts_compiler /fsanitize=address /Zi)
+      set(sanitizer_opts_linker "")
     endif()
 
     # Apply sanitizer options.
-    if (DEFINED sanitizer_opts)
-      target_compile_options(${target} PRIVATE ${sanitizer_opts})
-      target_link_options(${target} PRIVATE ${sanitizer_opts})
+    if (DEFINED sanitizer_opts_compiler AND DEFINED sanitizer_opts_linker)
+      target_compile_options(${target} PRIVATE ${sanitizer_opts_compiler})
+      target_link_options(${target} PRIVATE ${sanitizer_opts_linker})
     else()
       message(FATAL_ERROR "Failed to setup sanitizer for (target: ${target}, system: ${CMAKE_SYSTEM_NAME}, compiler: ${CMAKE_CXX_COMPILER_ID})")
     endif()
@@ -119,6 +121,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
   target_compile_options(
     example-app
     PRIVATE
+      # https://clang.llvm.org/docs/UsersManual.html#diagnostics-enable-everything
       -Wall
       -Wextra
   )
