@@ -17,9 +17,18 @@ function(use_sanitizer target)
     if ((CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
       if (LINUX OR APPLE OR WIN32)
         set(CMAKE_CXX_FLAGS_DEBUG "-O1")
-        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded)
         set(sanitizer_opts_compiler -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
         set(sanitizer_opts_linker -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
+      endif()
+
+      if (WIN32)
+        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>)
+
+        find_package(LLVM REQUIRED CONFIG)
+        add_custom_command(TARGET ${target} POST_BUILD
+          COMMAND ${CMAKE_COMMAND} -E copy_if_different
+          "${LLVM_LIBRARY_DIRS}/clang/${LLVM_VERSION_MAJOR}/lib/windows/clang_rt.asan_dynamic-x86_64.dll"
+          $<TARGET_FILE_DIR:${target}>)
       endif()
     endif()
 
@@ -34,13 +43,6 @@ function(use_sanitizer target)
 
     # MSVC
     if (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-      get_property(msvc_rt TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY)
-      if (NOT DEFINED msvc_rt)
-        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>DLL)
-      else()
-        string(REPLACE "Debug" "" msvc_rt ${msvc_rt})
-        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY ${msvc_rt})
-      endif()
       set(sanitizer_opts_compiler /fsanitize=address /Zi)
       set(sanitizer_opts_linker "")
     endif()
