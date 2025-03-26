@@ -24,6 +24,7 @@ function(use_sanitizer target)
       if (WIN32)
         set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>)
 
+        # WARNING: try catch does not work with clang address sanitizer on Windows!
         find_package(LLVM REQUIRED CONFIG)
         add_custom_command(TARGET ${target} POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy_if_different
