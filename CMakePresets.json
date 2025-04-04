@@ -1,5 +1,5 @@
 {
-  "$schema": "https://cmake.org/cmake/help/v3.31/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json",
+  "$schema": "https://cmake.org/cmake/help/v4.0/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json",
   "version": 10,
   "configurePresets": [
     {
