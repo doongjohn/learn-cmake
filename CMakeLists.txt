@@ -25,11 +25,14 @@ function(use_sanitizer target)
         set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>)
 
         # WARNING: try catch does not work with clang address sanitizer on Windows!
+        # https://github.com/google/sanitizers/issues/749
         find_package(LLVM REQUIRED CONFIG)
-        add_custom_command(TARGET ${target} POST_BUILD
+        add_custom_command(
+          TARGET ${target} POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy_if_different
           "${LLVM_LIBRARY_DIRS}/clang/${LLVM_VERSION_MAJOR}/lib/windows/clang_rt.asan_dynamic-x86_64.dll"
-          $<TARGET_FILE_DIR:${target}>)
+          $<TARGET_FILE_DIR:${target}>
+        )
       endif()
     endif()
 
@@ -71,7 +74,7 @@ if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
 endif()
 
-# Link time optimization.
+# Link time optimization. (LTO, IPO)
 # https://stackoverflow.com/questions/31355692/how-do-i-enable-link-time-optimization-lto-with-cmake
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   include(CheckIPOSupported)
@@ -134,13 +137,13 @@ endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   # MSVC compiler options: https://learn.microsoft.com/en-us/cpp/build/reference/compiler-options-listed-by-category
+  # MSVC linker options: https://learn.microsoft.com/en-us/cpp/build/reference/linker-options
   target_compile_options(
     example-app
     PRIVATE
       /W3
       /sdl
   )
-  # msvc linker options: https://learn.microsoft.com/en-us/cpp/build/reference/linker-options
   # target_link_options(
   #   example-app
   #   PRIVATE
