@@ -26,9 +26,9 @@
         "CC": "gcc",
         "CXX": "g++"
       },
-      "$comment": "gcc can't compile c++ 20 module with sanitizer enabled.",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "$comment": "gcc can't compile c++ 20 module with sanitizer enabled."
       }
     },
     {
