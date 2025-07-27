@@ -3,7 +3,7 @@
   "version": 10,
   "configurePresets": [
     {
-      "name": "gcc",
+      "name": "gcc release",
       "displayName": "gcc (ninja)",
       "description": "gcc (ninja)",
       "generator": "Ninja",
@@ -28,13 +28,14 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
+        "USE_SANITIZER": "OFF",
         "$comment": "gcc can't compile c++ 20 module with sanitizer enabled."
       }
     },
     {
-      "name": "clang",
-      "displayName": "clang (ninja)",
-      "description": "clang (ninja)",
+      "name": "clang release",
+      "displayName": "clang, ninja",
+      "description": "clang, ninja",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/clang_release",
       "environment": {
@@ -47,8 +48,8 @@
     },
     {
       "name": "clang debug",
-      "displayName": "clang (ninja, sanitizer)",
-      "description": "clang (ninja, sanitizer)",
+      "displayName": "clang, ninja, sanitizer",
+      "description": "clang, ninja, sanitizer",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/clang_debug",
       "environment": {
@@ -61,9 +62,9 @@
       }
     },
     {
-      "name": "msvc",
-      "displayName": "msvc (ninja)",
-      "description": "msvc (ninja)",
+      "name": "msvc release",
+      "displayName": "msvc, ninja",
+      "description": "msvc, ninja",
       "condition": {
         "type": "notEquals",
         "lhs": "$env{VSINSTALLDIR}",
@@ -81,8 +82,8 @@
     },
     {
       "name": "msvc debug",
-      "displayName": "msvc (ninja, sanitizer)",
-      "description": "msvc (ninja, sanitizer)",
+      "displayName": "msvc, ninja, sanitizer",
+      "description": "msvc, ninja, sanitizer",
       "condition": {
         "type": "notEquals",
         "lhs": "$env{VSINSTALLDIR}",
@@ -102,24 +103,24 @@
   ],
   "buildPresets": [
     {
-      "name": "gcc",
-      "configurePreset": "gcc"
+      "name": "gcc release",
+      "configurePreset": "gcc release"
     },
     {
       "name": "gcc debug",
       "configurePreset": "gcc debug"
     },
     {
-      "name": "clang",
-      "configurePreset": "clang"
+      "name": "clang release",
+      "configurePreset": "clang release"
     },
     {
       "name": "clang debug",
       "configurePreset": "clang debug"
     },
     {
-      "name": "msvc",
-      "configurePreset": "msvc",
+      "name": "msvc release",
+      "configurePreset": "msvc release",
       "condition": {
         "type": "notEquals",
         "lhs": "$env{VSINSTALLDIR}",

@@ -18,9 +18,15 @@
 
 - [CMakeDoc: cmake-generators](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html)
 
+```
+-S <cmake-dir>
+-B <build-dir>
+-G {"Ninja"|"Ninja Multi-Config"|"Visual Studio 17 2022"|...}
+-D<var-name>=<value>
+```
+
 ```fish
-cmake -S . -B <build-dir>
-    [-G {"Ninja"|"Ninja Multi-Config"|"Visual Studio 17 2022"|...}]
+cmake -S . -B build/clang_debug -G "Ninja" -DCMAKE_BUILD_TYPE=Debug -DUSE_SANITIZER:BOOL=ON
 ```
 
 ### compile_commands.json

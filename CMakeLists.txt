@@ -7,9 +7,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 # https://clang.llvm.org/docs/AddressSanitizer.html
-# cmake -B build/clang_debug -G "Ninja" -DCMAKE_BUILD_TYPE=Debug -DUSE_SANITIZER:BOOL=ON
+set(USE_SANITIZER OFF CACHE BOOL "Use Sanitizer")
+
 function(use_sanitizer target)
-  set(USE_SANITIZER OFF CACHE BOOL "Use Sanitizer")
   if (USE_SANITIZER)
     message(STATUS "Setting up sanitizer for (target: ${target}, system: ${CMAKE_SYSTEM_NAME}, compiler: ${CMAKE_CXX_COMPILER_ID})")
 
@@ -21,11 +21,10 @@ function(use_sanitizer target)
         set(sanitizer_opts_linker -fno-omit-frame-pointer -fno-sanitize-recover=all -fsanitize=address,undefined)
       endif()
 
+      # WARNING: try catch does not work with clang address sanitizer on Windows!
+      # https://github.com/google/sanitizers/issues/749
       if (WIN32)
-        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>)
-
-        # WARNING: try catch does not work with clang address sanitizer on Windows!
-        # https://github.com/google/sanitizers/issues/749
+        # Copy clang_rt.asan_dynamic-x86_64.dll
         find_package(LLVM REQUIRED CONFIG)
         add_custom_command(
           TARGET ${target} POST_BUILD
@@ -33,6 +32,9 @@ function(use_sanitizer target)
           "${LLVM_LIBRARY_DIRS}/clang/${LLVM_VERSION_MAJOR}/lib/windows/clang_rt.asan_dynamic-x86_64.dll"
           $<TARGET_FILE_DIR:${target}>
         )
+
+        # clang_rt.asan_dynamic-x86_64.dll is built with /MT
+        set_property(TARGET ${target} PROPERTY MSVC_RUNTIME_LIBRARY MultiThreaded$<$<CONFIG:Debug>:Debug>)
       endif()
     endif()
 
@@ -74,16 +76,16 @@ if (WIN32 AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS "-fdiagnostics-color=always -fansi-escape-codes")
 endif()
 
-# Link time optimization. (LTO, IPO)
-# https://stackoverflow.com/questions/31355692/how-do-i-enable-link-time-optimization-lto-with-cmake
+# Link time optimization. (LTO / IPO)
+# https://cmake.org/cmake/help/latest/module/CheckIPOSupported.html
 if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   include(CheckIPOSupported)
-  check_ipo_supported(RESULT ipo_supported OUTPUT ipo_error)
-  if(ipo_supported)
-    message(STATUS "IPO supported")
-    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+  check_ipo_supported(RESULT is_ipo_supported OUTPUT error)
+  if(is_ipo_supported)
+    message(STATUS "IPO enabled")
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
   else()
-    message(STATUS "IPO not supported: <${ipo_error}>")
+    message(STATUS "IPO is not supported: ${error}")
   endif()
 endif()
 
