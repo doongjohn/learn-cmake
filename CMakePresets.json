@@ -4,8 +4,8 @@
   "configurePresets": [
     {
       "name": "gcc release",
-      "displayName": "gcc (ninja)",
-      "description": "gcc (ninja)",
+      "displayName": "gcc, ninja",
+      "description": "gcc, ninja",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/gcc_release",
       "environment": {
@@ -18,8 +18,8 @@
     },
     {
       "name": "gcc debug",
-      "displayName": "gcc (ninja, sanitizer)",
-      "description": "gcc (ninja, sanitizer)",
+      "displayName": "gcc, ninja, sanitizer",
+      "description": "gcc, ninja, sanitizer",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/gcc_debug",
       "environment": {
