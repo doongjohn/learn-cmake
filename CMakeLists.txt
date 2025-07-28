@@ -63,6 +63,14 @@ function(use_sanitizer target)
   endif()
 endfunction()
 
+# Prevent std version decay.
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Set std version.
+# You can override the version for a target via set_property.
+# https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
+set(CMAKE_CXX_STANDARD 20)
+
 project(
   ExampleProject
   VERSION 0.1.0
@@ -89,11 +97,9 @@ if (NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
   endif()
 endif()
 
+# Create executable target.
 add_executable(example-app "")
-
-# https://cmake.org/cmake/help/latest/manual/cmake-properties.7.html
 set_property(TARGET example-app PROPERTY OUTPUT_NAME "app")
-set_property(TARGET example-app PROPERTY CXX_STANDARD 20)
 
 use_sanitizer(example-app)
 
